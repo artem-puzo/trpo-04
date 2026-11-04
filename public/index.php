@@ -1,4 +1,7 @@
 <?php 
+require_once __DIR__ . '/../src/functions.php';
+$employees = read_CSV(__DIR__ . '/../dataset/employees.csv');
+
 const APP_VERSION = "1.0.0";
 
 $appTitle = 'Заявки сотрудников';
@@ -22,17 +25,32 @@ $departments   = ['Разработка', 'Аналитика', 'Тестиро�
     </header>   
     <main>
         <section id="employees">
-            <h2>Сотрудники</h2>
-
-            <?php if ($showHint): ?>
-                <p>Максимальный стаж: <?= $maxExperiance ?> лет.</p>
+           <?php if ($employees === []): ?>
+                <p>Данные не найдены.</p>
+            <?php else: ?>
+                <table border="1" cellpadding="6">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>ФИО</th>
+                            <th>Отдел</th>
+                            <th>Стаж, лет</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($employees as $emp): ?>
+                            <tr>
+                                <td><?= e($emp['id']) ?></td>
+                                <td><?= e($emp['name']) ?></td>
+                                <td><?= e($emp['department']) ?></td>
+                                <td><?= e($emp['experience']) ?></td>
+                                <td><?= e($emp['email']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             <?php endif; ?>
-            
-            <ul>
-                <?php foreach ($departments as $dep): ?>
-                    <li><?= $dep ?></li>
-                <?php endforeach; ?>
-            </ul>
         </section>
     </main>
 </body>
