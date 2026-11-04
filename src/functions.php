@@ -19,9 +19,21 @@ function read_CSV(string $path): array {
         if ($row === [null]){
             continue;
         }
-        $employees[] = array_combine($header, $row);
+        $employees[] = parseEmployeesRow($header, $row);
     }
     fclose($handle);
 
     return $employees;
+}
+
+function parseEmployeesRow(array $header, array $row): array {
+    $data = array_combine($header, $row);
+
+    return [
+        'id'         => (int) $data['id'],
+        'name'       => trim($data['name']),
+        'department' => trim($data['department']),
+        'experience' => (int) $data['experience'],
+        'email'      => trim($data['email']),
+    ];
 }

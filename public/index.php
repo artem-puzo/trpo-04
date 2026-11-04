@@ -41,10 +41,10 @@ $departments   = ['Разработка', 'Аналитика', 'Тестиро�
                     <tbody>
                         <?php foreach ($employees as $emp): ?>
                             <tr>
-                                <td><?= e($emp['id']) ?></td>
+                                <td><?= $emp['id'] ?></td>
                                 <td><?= e($emp['name']) ?></td>
                                 <td><?= e($emp['department']) ?></td>
-                                <td><?= e($emp['experience']) ?></td>
+                                <td><?= $emp['experience'] ?></td>
                                 <td><?= e($emp['email']) ?></td>
                             </tr>
                         <?php endforeach; ?>
