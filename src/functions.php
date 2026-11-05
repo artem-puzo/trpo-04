@@ -37,3 +37,34 @@ function parseEmployeesRow(array $header, array $row): array {
         'email'      => trim($data['email']),
     ];
 }
+
+function validateInput(array $input): array {
+    $experience = $input['experience'] ?? '';
+
+    $errors = [];
+    if ($input['name'] === ''){
+        $errors['name'] = 'Укажите ФИО';
+    } elseif (iconv_strlen($input['name']) < 2 || iconv_strlen($input['name']) > 100) {
+        $errors['name'] = 'ФИО должно содержать от 2 до 100 символов';
+    }
+
+    if ($input['email'] === ''){
+        $errors['email'] = 'Укажите email';
+    } elseif (filter_var($input['email'], FILTER_VALIDATE_EMAIL) === false){
+        $errors['email'] = 'Email должен быть в формате email@email.email';
+    }
+
+    if ($input['department'] === ''){
+        $errors['department'] = 'Укажите отдел';
+    }
+
+    if ($experience === '') {
+        $errors['experience'] = 'Укажите стаж';
+    } elseif (filter_var($experience, FILTER_VALIDATE_INT) === false) {
+        $errors['experience'] = 'Стаж должен быть целым числом';
+    } elseif ((int) $experience < 0 || (int) $experience > 50) {
+        $errors['experience'] = 'Стаж должен быть от 0 до 50 лет';
+    }
+
+    return $errors;
+}
