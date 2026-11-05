@@ -68,3 +68,14 @@ function validateInput(array $input): array {
 
     return $errors;
 }
+
+function filterByDepartment(array $employees, string $department): array{
+    if ($department === ''){
+        return $employees;
+    }
+
+    return array_values(array_filter(
+        $employees,
+        fn(array $emp): bool => $emp['department'] === $department
+    ));
+}
